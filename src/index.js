@@ -57,6 +57,7 @@ const shutdown = config => {
 
   // and load the index.html of the app.
   window.loadFile(path.join(__dirname, "shutdown.html"));
+  window.focus();
 
   // Emitted when the window is closed.
   window.on("closed", function() {
@@ -99,7 +100,7 @@ const loadConfig = async () => {
         await fs.readFile(path.join(homedir(), "./cronjob-config.json"))
       );
     } else {
-      throw new Error('can\'t found useful config');
+      throw new Error("can't found useful config");
     }
     for (let scheduleConfig of allConfig.schedules) {
       cron.schedule(scheduleConfig.cron, () => {
