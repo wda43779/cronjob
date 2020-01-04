@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="alert"></div>
+      <div class="text">电脑在<span id="sec">30</span>秒后关机，按 ESC 取消</div>
+    </div>
+    <style>
+      html, body {
+        margin: 0;
+      }
+      body {
+        background: #ffcece;
+      }
+      .container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: space-around;
+      }
+      .alert {
+        width: 400px;
+        height: 400px;
+        background-image: url("./alert.svg");
+      }
+      .text {
+        font: menu;
+        font-size: 120px;
+        color: #E64444;
+      }
+    </style>
+    <script>
+      window.addEventListener("load", () => {
+        let sec = 30;
+        window.addEventListener("keyup", (e) => {
+          if (e.keyCode === 27) {
+            const { remote } = require('electron');
+            const window = remote.getCurrentWindow();
+            window.close();
+          }
+        })
+        const handle = setInterval(() => {
+          if (sec > 0) {
+            sec--;
+            document.querySelector("#sec").innerText = sec;
+          } else {
+            const shutdown = require('electron-shutdown-command');
+            console.log(shutdown)
+            shutdown.shutdown(); 
+          }
+        }, 1000)
+      })
+    </script>
+  </body>
+</html>

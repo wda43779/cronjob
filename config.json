@@ -1,0 +1,12 @@
+{
+  "schedules": [
+    {
+      "function": "SHUTDOWN",
+      "cron": "55 22 * * 0-4"
+    },
+    {
+      "function": "SHUTDOWN",
+      "cron": "55 23 * * 5-6"
+    }
+  ]
+}
