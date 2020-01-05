@@ -9,10 +9,13 @@
   <body>
     <div class="container">
       <div class="alert"></div>
-      <div class="text">电脑在<span id="sec">30</span>秒后关机，按 ESC 取消</div>
+      <div class="text">
+        电脑在<span id="sec">30</span>秒后关机，点击取消
+      </div>
     </div>
     <style>
-      html, body {
+      html,
+      body {
         margin: 0;
       }
       body {
@@ -34,30 +37,34 @@
       .text {
         font: menu;
         font-size: 120px;
-        color: #E64444;
+        color: #e64444;
       }
     </style>
     <script>
       window.addEventListener("load", () => {
         let sec = 30;
-        window.addEventListener("keyup", (e) => {
+
+        const { remote } = require("electron");
+        const electronWindow = remote.getCurrentWindow();
+        window.addEventListener("click", () => {
+          electronWindow.close();
+        });
+        window.addEventListener("keyup", e => {
           if (e.keyCode === 27) {
-            const { remote } = require('electron');
-            const window = remote.getCurrentWindow();
-            window.close();
+            electronWindow.close();
           }
-        })
+        });
         const handle = setInterval(() => {
           if (sec > 0) {
             sec--;
             document.querySelector("#sec").innerText = sec;
           } else {
-            const shutdown = require('electron-shutdown-command');
-            console.log(shutdown)
-            shutdown.shutdown(); 
+            const shutdown = require("electron-shutdown-command");
+            console.log(shutdown);
+            shutdown.shutdown();
           }
-        }, 1000)
-      })
+        }, 1000);
+      });
     </script>
   </body>
 </html>
